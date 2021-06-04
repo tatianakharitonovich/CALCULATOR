@@ -1,0 +1,24 @@
+body {
+	background-color: hsl(330, 75%, 75%) !important;
+	background-color: black;
+}
+.container {
+	width: 280px !important;
+	margin-top: 50px;
+	/*border: 1px solid black;*/
+	background-color: black;
+	padding: 10px;
+}
+
+.main__title {
+	color: white;
+	text-align: center;
+}
+.btn {
+	width: 60px;
+	margin: 2px 0 2px 0;
+}
+
+.btn-larg {
+	width: 125px;
+}
