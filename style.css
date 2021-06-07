@@ -3,7 +3,7 @@ body {
 	background-color: black;
 }
 .container {
-	width: 280px !important;
+	width: 518px !important;
 	margin-top: 50px;
 	background-color: black;
 	padding: 10px;
@@ -16,14 +16,17 @@ body {
 
 input {
 	text-align: right;
+	font-size: 27px !important;
 }
- 
+
 .btn {
-	width: 60px;
+	width: 120px;
+	height: 60px;
+	font-size: 25px !important;
 	margin: 2px 0 2px 0;
 }
 
 .btn-larg {
-	width: 125px;
+	width: 245px;
 }
 
