@@ -19,3 +19,16 @@ function cleanSymbol() {
 function calc() {
 	resultField.value = +eval(inputField.value).toFixed(15);
 };
+
+inputField.addEventListener('keyup', function () {
+    inputField.value = inputField.value.replace(/[^\d()/*+=-]/,'');
+});
+
+inputField.addEventListener('keydown', function() {
+	if (event.key=="=") {
+		calc();
+		cleanSymbol();
+	} 
+});
+
+
