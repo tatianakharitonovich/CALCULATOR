@@ -17,33 +17,5 @@ function cleanSymbol() {
 };
 
 function calc() {
-	resultField.value = eval(inputField.value);
+	resultField.value = +eval(inputField.value).toFixed(15);
 };
-
-// const operators = {
-//     '+': (x, y) => x + y,
-//     '-': (x, y) => x - y,
-//     '*': (x, y) => x * y,
-//     '/': (x, y) => x / y
-// };
-
-// function calcNew () {
-// 	evaluate (inputField.value);
-// }
-
-// let evaluate = (expr) => {
-//     let stack = [];
-
-//     expr.split('').forEach((token) => {
-//         if (token in operators) {
-//             let [y, x] = [stack.pop(), stack.pop()];
-//             stack.push(operators[token](x, y));
-//         } else {
-//             stack.push(parseFloat(token));
-//         }
-//     });
-
-//     return resultField.value = stack.pop();
-// };
-
-
