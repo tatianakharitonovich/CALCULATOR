@@ -32,11 +32,11 @@ inputField.addEventListener('keypress', function(event) {
 });
 
 function checkInputEnd () {
-	if (event.target.value[event.target.value.length-1] === "+") ||
-	   (event.target.value[event.target.value.length-1] === "-") ||
-	   (event.target.value[event.target.value.length-1] === "*") || 
-	   (event.target.value[event.target.value.length-1] === "/") || 
-	   (event.target.value[event.target.value.length-1] === ".") {
+	if (event.target.value[event.target.value.length-1] === "+" ||
+	   event.target.value[event.target.value.length-1] === "-" ||
+	   event.target.value[event.target.value.length-1] === "*" || 
+	   event.target.value[event.target.value.length-1] === "/" || 
+	   event.target.value[event.target.value.length-1] === ".") {
 		event.target.value = event.target.value.replace(/[+*/.-]/g,'');
 	}
 }
