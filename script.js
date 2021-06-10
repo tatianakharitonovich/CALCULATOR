@@ -1,8 +1,6 @@
 let inputField = document.getElementById("disabledTextInput");
 let resultField = document.getElementById("disabledTextResult");
 
-console.log(inputField);
-
 function insertField (symbol) {
 	inputField.value = inputField.value + symbol;
 	checkInputEnd ();
@@ -24,7 +22,47 @@ function cleanSymbol() {
 }
 
 function calc() {
-	resultField.value = +eval(inputField.value).toFixed(10);
+	resultField.value =`=${+eval(inputField.value).toFixed(10)}`;
+}
+
+function sin() {
+	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
+	let deg=+eval(inputField.value).toFixed(2);
+	inputField.value=deg;
+	resultField.value = `sin(${deg})=${+Math.sin(rad).toFixed(3)}`;
+}
+
+function cos() {
+	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
+	let deg=+eval(inputField.value).toFixed(2);
+	inputField.value=deg;
+	resultField.value = `cos(${deg})=${+Math.cos(rad).toFixed(2)}`;
+}
+
+function tg() {
+	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
+	let deg=+eval(inputField.value).toFixed(2);
+	inputField.value=deg;
+	resultField.value = `tg(${deg})=${+Math.tan(rad).toFixed(2)}`;
+}
+
+function ctg() {
+	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
+	let deg=+eval(inputField.value).toFixed(2);
+	inputField.value=deg;
+	resultField.value = `ctg(${deg})=${+(1/Math.tan(rad)).toFixed(2)}`;
+}
+
+function lg() {
+	let res=+eval(inputField.value).toFixed(2);
+	inputField.value=res;
+	resultField.value = `lg(${res})=${+Math.log10(res).toFixed(2)}`;
+}
+
+function ln() {
+	let res=+eval(inputField.value).toFixed(2);
+	inputField.value=res;
+	resultField.value = `ln(${res})=${+Math.log(res).toFixed(2)}`;
 }
 
 function checkInputEnd () {
@@ -97,7 +135,6 @@ function checkBrackets () {
 	}
 }
 
-
 inputField.addEventListener('input', function (event) {
     event.target.value = event.target.value.replace(/[^\d()/*+.-]/g,'');
  });
@@ -121,3 +158,5 @@ inputField.addEventListener('keypress', function(event) {
 		calc();
 	} 
 });
+
+
