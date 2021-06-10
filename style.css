@@ -26,7 +26,10 @@ input {
 	margin: 2px 0 2px 0;
 }
 
-.btn-larg {
-	width: 345px;
+.btn-small {
+	width: 112px;
+	height: 90px;
+	font-size: 35px !important;
+	line-height: 5px !important;
 }
 
