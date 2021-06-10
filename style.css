@@ -1,5 +1,5 @@
 body {
-	background-color: hsl(330, 75%, 75%) !important;
+	background-color: hsl(330, 90%, 87%) !important;
 	background-color: black;
 }
 .container {
@@ -12,11 +12,12 @@ body {
 .main__title {
 	color: white;
 	text-align: center;
+	font-size: 70px !important;
 }
 
 input {
 	text-align: right;
-	font-size: 52px !important;
+	font-size: 65px !important;
 }
 
 .btn {
