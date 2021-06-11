@@ -10,6 +10,8 @@ function insertField (symbol) {
 	checkBracketEndAfter ();
 	checkBracketStartBefore ();
 	checkBracketEndBefore ();
+	checkBeforeSinCos ();
+	checkBeforeTgLnLg ();
 }
 
 function clean() {
@@ -22,48 +24,42 @@ function cleanSymbol() {
 }
 
 function calc() {
-	resultField.value =`=${+eval(inputField.value).toFixed(10)}`;
+	checkBracketsCalc ();
+	let resMath=inputField.value;
+	resMath=resMath.replace('sin(','Math.sin(');
+	resMath=resMath.replace('cos(','Math.cos(');
+	resMath=resMath.replace('tg(','Math.tan(');
+	resMath=resMath.replace('ln(','Math.log(');
+	resMath=resMath.replace('lg(','Math.log10(');
+	console.log(resMath);
+	resultField.value =`=${+eval(resMath).toFixed(10)}`;
 }
 
-function sin() {
-	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
-	let deg=+eval(inputField.value).toFixed(2);
-	inputField.value=deg;
-	resultField.value = `sin(${deg})=${+Math.sin(rad).toFixed(3)}`;
+function checkBeforeSinCos () {
+  let forbiddenSymbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+  let forbiddenFunc = ["sin(", "cos("];
+  let str = inputField.value;
+  if (forbiddenFunc.includes(str.slice(str.length-4)) && forbiddenSymbols.includes(str[str.length-5]) ) {
+  	inputField.value = inputField.value.substr(0, inputField.value.length - 4);
+	}
 }
 
-function cos() {
-	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
-	let deg=+eval(inputField.value).toFixed(2);
-	inputField.value=deg;
-	resultField.value = `cos(${deg})=${+Math.cos(rad).toFixed(2)}`;
+function checkBeforeTgLnLg() {
+  let forbiddenSymbols = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."];
+  let forbiddenFunc = ["tg(", "ln(", "lg("];
+  let str = inputField.value;
+  if (forbiddenFunc.includes(str.slice(str.length-3)) && forbiddenSymbols.includes(str[str.length-4]) ) {
+  	inputField.value = inputField.value.substr(0, inputField.value.length - 3);
+	}
 }
 
-function tg() {
-	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
-	let deg=+eval(inputField.value).toFixed(2);
-	inputField.value=deg;
-	resultField.value = `tg(${deg})=${+Math.tan(rad).toFixed(2)}`;
-}
+// function tg() {
+// 	let rad=+eval(inputField.value).toFixed(2)*Math.PI/180;
+// 	let deg=+eval(inputField.value).toFixed(2);
+// 	inputField.value=deg;
+// 	resultField.value = `tg(${deg})=${+Math.tan(rad).toFixed(2)}`;
+// }
 
-function ctg() {
-	let rad=+eval(inputField.value).toFixed(2)*3.14/180;
-	let deg=+eval(inputField.value).toFixed(2);
-	inputField.value=deg;
-	resultField.value = `ctg(${deg})=${+(1/Math.tan(rad)).toFixed(2)}`;
-}
-
-function lg() {
-	let res=+eval(inputField.value).toFixed(2);
-	inputField.value=res;
-	resultField.value = `lg(${res})=${+Math.log10(res).toFixed(2)}`;
-}
-
-function ln() {
-	let res=+eval(inputField.value).toFixed(2);
-	inputField.value=res;
-	resultField.value = `ln(${res})=${+Math.log(res).toFixed(2)}`;
-}
 
 function checkInputEnd () {
   let forbiddenSymbols = ["+", "*", "/", "-", "."];
@@ -116,21 +112,28 @@ function checkBracketEndBefore () {
 
 function checkBrackets () {
 	let str = inputField.value;
-	if (str[str.length-1] ===")") {
-		let pos1 = -1;
-		let i=0;
-		while ((pos1 = str.indexOf("(", pos1 + 1)) != -1) {
-			i++;
-		};
-		let pos2 = -1;
-		let j=0;
-		while ((pos2 = str.indexOf(")", pos2 + 1)) != -1) {
-			j++;
-		};
-		if (i >= j) {
-			inputField.value = inputField.value;
-		} else {
-			cleanSymbol();
+	let openBracket=0;
+	let closeBracket=0;
+	for (let symbol of str) {
+		if (symbol==="(") {openBracket++;};
+		if (symbol===")") {closeBracket++;};
+	};
+	if (openBracket < closeBracket) {
+		cleanSymbol();
+	}
+}
+
+function checkBracketsCalc () {
+	let str = inputField.value;
+	let openBracket=0;
+	let closeBracket=0;
+	for (let symbol of str) {
+		if (symbol==="(") {openBracket++;};
+		if (symbol===")") {closeBracket++;};
+	};
+	if (openBracket > closeBracket) {
+		for (let i=1; i<=(openBracket-closeBracket); i++) {
+			inputField.value=inputField.value + ")";
 		}
 	}
 }
@@ -158,5 +161,3 @@ inputField.addEventListener('keypress', function(event) {
 		calc();
 	} 
 });
-
-
