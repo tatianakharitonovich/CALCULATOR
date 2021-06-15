@@ -131,8 +131,9 @@ function checkBracketsCalc () {
 		if (symbol==="(") {openBracket++;};
 		if (symbol===")") {closeBracket++;};
 	};
+	let s = openBracket - closeBracket;
 	if (openBracket > closeBracket) {
-		for (let i=1; i<=(openBracket-closeBracket); i++) {
+		for (let i=1; i <= s; i++) {
 			inputField.value=inputField.value + ")";
 		}
 	}
