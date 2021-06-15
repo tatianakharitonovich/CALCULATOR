@@ -24,13 +24,17 @@ function cleanSymbol() {
 }
 
 function calc() {
+	if (inputField.value[inputField.value.length-1]==="(") {
+		resultField.value = "Неверный ввод";
+		return;
+	};
 	checkBracketsCalc ();
 	let resMath=inputField.value;
-	resMath=resMath.replace('sin(','Math.sin(');
-	resMath=resMath.replace('cos(','Math.cos(');
-	resMath=resMath.replace('tg(','Math.tan(');
-	resMath=resMath.replace('ln(','Math.log(');
-	resMath=resMath.replace('lg(','Math.log10(');
+	resMath=resMath.replaceAll('sin(','Math.sin(');
+	resMath=resMath.replaceAll('cos(','Math.cos(');
+	resMath=resMath.replaceAll('tg(','Math.tan(');
+	resMath=resMath.replaceAll('ln(','Math.log(');
+	resMath=resMath.replaceAll('lg(','Math.log10(');
 	console.log(resMath);
 	resultField.value =`=${+eval(resMath).toFixed(10)}`;
 }
@@ -51,6 +55,46 @@ function checkBeforeTgLnLg() {
   if (forbiddenFunc.includes(str.slice(str.length-3)) && forbiddenSymbols.includes(str[str.length-4]) ) {
   	inputField.value = inputField.value.substr(0, inputField.value.length - 3);
 	}
+}
+
+function checkSin () {
+  let str = inputField.value;
+  if (str[str.length-1]==="s") {
+  	cleanSymbol ();
+  	inputField.value=inputField.value + "sin(";
+  }
+}
+
+function checkCos () {
+  let str = inputField.value;
+  if (str[str.length-1]==="c") {
+  	cleanSymbol ();
+  	inputField.value=inputField.value + "cos(";
+  }
+}
+
+function checkTg () {
+  let str = inputField.value;
+  if (str[str.length-1]==="t") {
+  	cleanSymbol ();
+  	inputField.value=inputField.value + "tg(";
+  }
+}
+
+function checkLn () {
+  let str = inputField.value;
+  if (str[str.length-1]==="l") {
+  	cleanSymbol ();
+  	inputField.value=inputField.value + "ln(";
+  }
+}
+
+function checkLg () {
+  let str = inputField.value;
+  if (str[str.length-1]==="g") {
+  	cleanSymbol ();
+  	inputField.value=inputField.value + "lg(";
+  }
 }
 
 // function tg() {
@@ -156,6 +200,16 @@ inputField.addEventListener ('input', checkBracketEndAfter);
 inputField.addEventListener ('input', checkBracketStartBefore);
 
 inputField.addEventListener ('input', checkBracketEndBefore);
+
+inputField.addEventListener ('input', checkSin);
+
+inputField.addEventListener ('input', checkCos);
+
+inputField.addEventListener ('input', checkTg);
+
+inputField.addEventListener ('input', checkLg);
+
+inputField.addEventListener ('input', checkLn);
 
 inputField.addEventListener('keypress', function(event) {
 	if (event.key === "=") {
