@@ -3,6 +3,7 @@ let resultField = document.getElementById("disabledTextResult");
 
 function insertField (symbol) {
 	inputField.value = inputField.value + symbol;
+	checkInputLenght ();	
 	checkInputEnd ();
 	checkBrackets ();
 	checkInputStart ();
@@ -17,10 +18,28 @@ function insertField (symbol) {
 function clean() {
 	inputField.value = "";
 	resultField.value = "";
+	inputField.classList.remove('input_text');
+	inputField.classList.remove('input_text_small');
+	resultField.classList.remove('input_text');
+	resultField.classList.remove('input_text_small');
 }
 
 function cleanSymbol() {
-	inputField.value = inputField.value.substr(0, inputField.value.length - 1);
+	let str = inputField.value;
+
+  if (str.slice(str.length-4)==='sin(' || str.slice(str.length-4)==='cos(') {
+  	inputField.value = inputField.value.substr(0, inputField.value.length - 4);
+  	return;
+  }
+
+  if (str.slice(str.length-3)==='lg(' || 
+  	str.slice(str.length-3)==='ln(' || 
+  	str.slice(str.length-3)==='tg(') {
+  	inputField.value = inputField.value.substr(0, inputField.value.length - 3);
+  	return;
+  }
+
+  inputField.value = inputField.value.substr(0, inputField.value.length - 1);
 }
 
 function calc() {
@@ -28,15 +47,35 @@ function calc() {
 		resultField.value = "Неверный ввод";
 		return;
 	};
+
 	checkBracketsCalc ();
+
 	let resMath=inputField.value;
 	resMath=resMath.replaceAll('sin(','Math.sin(');
 	resMath=resMath.replaceAll('cos(','Math.cos(');
 	resMath=resMath.replaceAll('tg(','Math.tan(');
 	resMath=resMath.replaceAll('ln(','Math.log(');
 	resMath=resMath.replaceAll('lg(','Math.log10(');
-	console.log(resMath);
+	
 	resultField.value =`=${+eval(resMath).toFixed(10)}`;
+
+	if (resultField.value.length > 19 && resultField.value.length < 28) {
+		resultField.classList.add('input_text');
+	};
+
+	if (resultField.value.length >= 28) {
+		resultField.classList.add('input_text_small');
+	};
+}
+
+function checkInputLenght () {
+	if (inputField.value.length > 19 && inputField.value.length < 28) {
+		inputField.classList.add('input_text');
+	};
+
+	if (inputField.value.length >= 28) {
+		inputField.classList.add('input_text_small');
+	};
 }
 
 function checkBeforeSinCos () {
@@ -187,6 +226,8 @@ inputField.addEventListener('input', function (event) {
     event.target.value = event.target.value.replace(/[^\d()/*+.sincolgt-]/g,'');
  });
 
+inputField.addEventListener ('input', checkInputLenght);
+
 inputField.addEventListener ('input', checkInputStart);
 
 inputField.addEventListener ('input', checkInputEnd);
@@ -214,5 +255,23 @@ inputField.addEventListener ('input', checkLn);
 inputField.addEventListener('keypress', function(event) {
 	if (event.key === "=") {
 		calc();
+	} 
+});
+
+inputField.addEventListener('keydown', function(event) {
+	if (event.key === "Backspace") {
+		let str = inputField.value;
+
+		if (str.slice(str.length-4)==='sin(' || str.slice(str.length-4)==='cos(') {
+  		inputField.value = inputField.value.substr(0, inputField.value.length - 3);
+  		return;
+  	};
+
+  	if (str.slice(str.length-3)==='lg(' || 
+  		str.slice(str.length-3)==='ln(' || 
+  		str.slice(str.length-3)==='tg(') {
+  		inputField.value = inputField.value.substr(0, inputField.value.length - 2);
+  		return;
+  	}
 	} 
 });
